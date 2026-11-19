@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Миша</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Стили для бесконечного появления имен */
+    #mishaContainer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #000000; /* Чистый черный фон */
+      z-index: 9999;
+      display: none; /* Скрыто по умолчанию */
+      overflow: hidden;
+    }
+
+    .misha-name {
+      position: absolute;
+      color: #ffffff; /* Чисто белый текст */
+      font-weight: 700;
+      white-space: nowrap;
+      opacity: 0;
+      animation: popIn 0.5s forwards;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* Легкое свечение для читаемости */
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.3); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Стили для кнопки по центру */
+    .center-btn-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 60vh;
+    }
+    
+    .center-btn {
+      padding: 20px 40px;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="index.html" class="logo">Ми<span>ша</span></a>
+    <nav class="nav">
+      <a href="index.html" class="active">Главная</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="center-btn-wrapper">
+      <button id="mishaBtn" class="btn center-btn">Нажми на меня</button>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 Миша</p>
+  </footer>
+
+  <!-- Контейнер для имен -->
+  <div id="mishaContainer"></div>
+
+  <script>
+    const btn = document.getElementById('mishaBtn');
+    const container = document.getElementById('mishaContainer');
+    let isSpamming = false;
+
+    btn.addEventListener('click', function() {
+      if (isSpamming) return; // Защита от повторных кликов
+      isSpamming = true;
+
+      // Показываем контейнер на весь экран
+      container.style.display = 'block';
+      
+      // Функция для создания одного имени
+      function createName() {
+        const span = document.createElement('span');
+        span.textContent = 'Миша';
+        span.className = 'misha-name';
+        
+        // Случайная позиция по всему экрану
+        const top = Math.random() * 100;
+        const left = Math.random() * 100;
+        span.style.top = top + '%';
+        span.style.left = left + '%';
+        
+        // Случайный размер шрифта (от 1rem до 4rem)
+        const size = Math.random() * 3 + 1;
+        span.style.fontSize = size + 'rem';
+        
+        // Случайный поворот для хаоса
+        const rotate = Math.random() * 360;
+        span.style.transform = `rotate(${rotate}deg)`;
+
+        // Больше никаких случайных серых цветов — только белый!
+        container.appendChild(span);
+      }
+
+      // Создаем имена бесконечно (каждые 30 миллисекунд)
+      setInterval(createName, 30);
+    });
+  </script>
+</body>
+</html>
